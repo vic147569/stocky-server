@@ -16,11 +16,22 @@ class UserController {
       res.status(201).json(newUser.toObject())
     } catch (error) {
       console.log(error)
-      res.status(500).send({ message: 'Create user fail' })
+      res.status(500).json({ message: 'Create user fail' })
     }
   }
 
-  // async get(req: RequireAuthProp<Request>, res: Response) {}
+  async get(req: RequireAuthProp<Request>, res: Response) {
+    try {
+      const currentUser = await User.findOne({ userId: req.auth.userId })
+      if (!currentUser) {
+        res.status(404).json({ message: 'User not found' })
+      }
+      res.json(currentUser)
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ message: 'Something went wrong' })
+    }
+  }
 }
 
 export default new UserController()
