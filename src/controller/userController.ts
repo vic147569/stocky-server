@@ -1,8 +1,9 @@
 import { Request, Response } from 'express'
 import User from '../models/user'
+import { RequireAuthProp } from '@clerk/clerk-sdk-node'
 
 class UserController {
-  async create(req: Request, res: Response) {
+  async create(req: RequireAuthProp<Request>, res: Response) {
     try {
       const { userId } = req.body
       const existingUser = await User.findOne({ userId })
@@ -18,6 +19,8 @@ class UserController {
       res.status(500).send({ message: 'Create user fail' })
     }
   }
+
+  // async get(req: RequireAuthProp<Request>, res: Response) {}
 }
 
 export default new UserController()
