@@ -32,6 +32,27 @@ class UserController {
       res.status(500).json({ message: 'Something went wrong' })
     }
   }
+
+  async update(req: RequireAuthProp<Request>, res: Response) {
+    try {
+      const { name, email, phone } = req.body
+      console.log('get req body')
+      const user = await User.findOne({ userId: req.auth.userId })
+      if (!user) {
+        res.status(404).json({ message: 'USer not found' })
+      }
+      if (user) {
+        user.name = name
+        user.email = email
+        user.phone = phone
+        await user.save()
+        res.send(user)
+      }
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ message: 'Something went wrong' })
+    }
+  }
 }
 
 export default new UserController()

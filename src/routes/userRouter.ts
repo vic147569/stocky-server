@@ -7,5 +7,6 @@ const userRouter = express.Router()
 
 userRouter.post('/', ClerkExpressRequireAuth(), userController.create)
 userRouter.get('/', ClerkExpressRequireAuth(), JWTParse, userController.get)
+userRouter.put('/', ClerkExpressRequireAuth(), JWTParse, userController.update)
 
 export default userRouter

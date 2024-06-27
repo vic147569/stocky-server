@@ -9,17 +9,18 @@ import {
   RequireAuthProp,
   StrictAuthProp
 } from '@clerk/clerk-sdk-node'
+
 const app = express()
 const port = 3000
 
+app.use(cors())
+app.use(express.json())
 declare global {
   namespace Express {
     interface Request extends StrictAuthProp {}
   }
 }
 
-app.use(cors())
-app.use(express.json())
 app.use('/api/user', userRouter)
 
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string).then(() => {
