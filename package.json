@@ -2,6 +2,7 @@
   "name": "boilerplate",
   "version": "1.2.2",
   "main": "index.ts",
+  "type": "module",
   "scripts": {
     "dev": "nodemon ./src/index.ts",
     "test": "jest --coverage",
@@ -56,9 +57,13 @@
     "cron": "^3.1.7",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "express-validator": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.7.0",
     "mongoose": "^8.4.3",
     "yahoo-finance2": "^2.11.3"
+  },
+  "nodemonConfig": {
+    "exec": "npx tsx ./src/index.ts"
   }
 }

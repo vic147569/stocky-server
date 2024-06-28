@@ -5,26 +5,27 @@ import cors from 'cors'
 import userRouter from './routes/userRouter'
 import mongoose from 'mongoose'
 import { StrictAuthProp } from '@clerk/clerk-sdk-node'
-import { job } from './data/collector'
+// import { job } from './data/collector'
+import stockRouter from './routes/stockRouter'
 
 const app = express()
 const port = 3000
-
-app.use(cors())
-app.use(express.json())
-
 declare global {
   namespace Express {
     interface Request extends StrictAuthProp {}
   }
 }
 
+app.use(cors())
+app.use(express.json())
 app.use('/api/user', userRouter)
+app.use('/api/stocks', stockRouter)
 
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string).then(() => {
   console.log('Connet to mongodb')
 })
-job.start()
+
+// job.start()
 
 app.get('/test', (req: Request, res: Response) => res.send('Hello World!'))
 
