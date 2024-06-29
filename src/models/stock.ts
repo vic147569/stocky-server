@@ -13,6 +13,15 @@ const stockSchema = new mongoose.Schema({
   last: {
     type: Number
   },
+  open: {
+    type: Number
+  },
+  close: {
+    type: Number
+  },
+  vol: {
+    type: Number
+  },
   change: {
     type: Number
   },
@@ -29,6 +38,9 @@ const stockSchema = new mongoose.Schema({
     type: Number
   },
   yearLow: {
+    type: Number
+  },
+  dividend: {
     type: Number
   },
   EPS: {

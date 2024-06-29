@@ -2,28 +2,43 @@ import { CronJob } from 'cron'
 import yahooFinance from 'yahoo-finance2'
 import { stockList } from './stock'
 import Stock from '../models/stock'
+import History from '@/models/History'
 
 const collector = async () => {
   console.log('start')
   for (const item of stockList) {
     const query = item.symbol
-    const res = await yahooFinance.quote(query)
-    console.log(item.sector)
-    const newData = new Stock({
-      symbol: res.symbol,
-      name: res.longName,
+    const queryOptions = {
+      period1: '2024-01-01'
+    }
+    const res1 = await yahooFinance.quote(query)
+    const res2 = await yahooFinance.historical(query, queryOptions)
+
+    const quoteData = new Stock({
+      symbol: res1.symbol,
+      name: res1.longName,
       sector: item.sector,
-      last: res.regularMarketPrice,
-      change: res.regularMarketChange,
-      changePercent: res.regularMarketChangePercent,
-      dayHigh: res.regularMarketDayHigh,
-      dayLow: res.regularMarketDayLow,
-      yearHigh: res.fiftyTwoWeekHigh,
-      yearLow: res.fiftyTwoWeekLow,
-      EPS: res.epsCurrentYear,
-      PE: res.priceEpsCurrentYear
+      last: res1.regularMarketPrice,
+      open: res1.regularMarketOpen,
+      close: res1.regularMarketPreviousClose,
+      vol: res1.regularMarketVolume,
+      change: res1.regularMarketChange,
+      changePercent: res1.regularMarketChangePercent,
+      dayHigh: res1.regularMarketDayHigh,
+      dayLow: res1.regularMarketDayLow,
+      yearHigh: res1.fiftyTwoWeekHigh,
+      yearLow: res1.fiftyTwoWeekLow,
+      dividend: res1.dividendYield,
+      EPS: res1.epsCurrentYear,
+      PE: res1.priceEpsCurrentYear
     })
-    await newData.save()
+    await quoteData.save()
+
+    const historyData = new History({
+      symbol: item.symbol,
+      price: res2
+    })
+    await historyData.save()
   }
   console.log('data fetch and save successfully')
 }
