@@ -7,7 +7,7 @@ import mongoose from 'mongoose'
 import { StrictAuthProp } from '@clerk/clerk-sdk-node'
 // import { job } from './data/collector'
 import stockRouter from './routes/stockRouter'
-import watchlistRouter from './routes/watchListRouter'
+import watchlistRouter from './routes/watchlistRouter'
 
 const app = express()
 const port = 3000
