@@ -1,5 +1,5 @@
 import Watchlist from '@/models/watchlist'
-import { RequireAuthProp } from '@clerk/clerk-sdk-node'
+import { RequireAuthProp, WithAuthProp } from '@clerk/clerk-sdk-node'
 import { Request, Response } from 'express'
 
 class WatchlistController {
@@ -38,6 +38,21 @@ class WatchlistController {
       console.log(error)
       res.status(500).json({ message: 'something went wrong' })
     }
+  }
+
+  async isInWatchlist(req: WithAuthProp<Request>, res: Response) {
+    const currentWatchlist = await Watchlist.findOne({
+      userId: req.auth.userId
+    })
+
+    if (!currentWatchlist) {
+      return res.json({ isInWatchlist: false })
+    }
+
+    const symbol = req.params.symbol
+
+    const isInWatchlist = currentWatchlist.stockList.includes(symbol)
+    return res.json({ isInWatchlist })
   }
 }
 
