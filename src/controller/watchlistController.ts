@@ -54,6 +54,37 @@ class WatchlistController {
     const isInWatchlist = currentWatchlist.stockList.includes(symbol)
     return res.json({ isInWatchlist })
   }
+
+  async update(req: WithAuthProp<Request>, res: Response) {
+    try {
+      const currentWatchlist = await Watchlist.findOne({
+        userId: req.auth.userId
+      })
+
+      if (!currentWatchlist) {
+        return res.status(404).json({ message: 'watchlist not found' })
+      }
+
+      const symbol = req.params.symbol
+
+      if (!currentWatchlist.stockList.includes(symbol)) {
+        currentWatchlist.stockList.push(symbol)
+        await currentWatchlist.save()
+        return res.send(currentWatchlist)
+      }
+      if (currentWatchlist.stockList.includes(symbol)) {
+        const newWatchlist = currentWatchlist.stockList.filter(
+          (item) => item != symbol
+        )
+        currentWatchlist.stockList = newWatchlist
+        await currentWatchlist.save()
+        return res.send(currentWatchlist)
+      }
+    } catch (error) {
+      console.log(error)
+      return res.status(500).json({ message: 'Something went wrong' })
+    }
+  }
 }
 
 export default new WatchlistController()

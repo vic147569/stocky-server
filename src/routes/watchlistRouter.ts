@@ -16,5 +16,11 @@ watchlistRouter.get(
   ClerkExpressWithAuth(),
   watchlistController.isInWatchlist
 )
+watchlistRouter.put(
+  '/:symbol',
+  param('symbol').isString().trim().notEmpty(),
+  ClerkExpressWithAuth({}),
+  watchlistController.update
+)
 
 export default watchlistRouter
