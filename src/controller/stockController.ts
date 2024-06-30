@@ -1,4 +1,4 @@
-import History from '@/models/History'
+import History from '@/models/history'
 import Stock from '@/models/stock'
 import { Request, Response } from 'express'
 
@@ -10,13 +10,13 @@ class StockController {
 
       // TODO: -if stock not found, do not send 404, send an empty array
       if (!stock) {
-        res.status(404).json({ message: 'Stock not found' })
+        return res.status(404).json({ message: 'Stock not found' })
       }
 
-      res.status(200).json(stock)
+      return res.status(200).json(stock)
     } catch (error) {
       console.log(error)
-      res.status(500).json({ message: 'Something went wrong' })
+      return res.status(500).json({ message: 'Something went wrong' })
     }
   }
 
@@ -26,13 +26,13 @@ class StockController {
       const history = await History.findOne({ symbol })
 
       if (!history) {
-        res.status(404).json({ message: 'Stock not found' })
+        return res.status(404).json({ message: 'Stock not found' })
       }
 
-      res.status(200).json(history)
+      return res.status(200).json(history)
     } catch (error) {
       console.log(error)
-      res.status(500).json({ message: 'Something went wrong' })
+      return res.status(500).json({ message: 'Something went wrong' })
     }
   }
 }

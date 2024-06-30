@@ -2,7 +2,7 @@ import { CronJob } from 'cron'
 import yahooFinance from 'yahoo-finance2'
 import { stockList } from './stock'
 import Stock from '../models/stock'
-import History from '@/models/History'
+import History from '@/models/history'
 
 const collector = async () => {
   console.log('start')

@@ -10,6 +10,7 @@ const historySchema = new mongoose.Schema({
       open: Number,
       high: Number,
       low: Number,
+      close: Number,
       adjClose: Number,
       volume: Number
     }
