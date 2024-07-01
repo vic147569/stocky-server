@@ -12,13 +12,13 @@ watchlistRouter.post('/', ClerkExpressRequireAuth(), watchlistController.create)
 watchlistRouter.get('/', ClerkExpressRequireAuth(), watchlistController.get)
 watchlistRouter.get(
   '/:symbol',
-  param('symbol').isString().trim().notEmpty(),
+  param('symbol').isString().trim().notEmpty().toUpperCase(),
   ClerkExpressWithAuth(),
   watchlistController.isInWatchlist
 )
 watchlistRouter.put(
   '/:symbol',
-  param('symbol').isString().trim().notEmpty(),
+  param('symbol').isString().trim().notEmpty().toUpperCase(),
   ClerkExpressWithAuth({}),
   watchlistController.update
 )
