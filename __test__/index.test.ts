@@ -75,7 +75,7 @@ describe('Express App', () => {
   afterAll(async () => {
     await mongoose.connection.close()
     server.close()
-  })
+  }, 50000)
 
   it('should respond with Hello World on GET /test', async () => {
     const res = await request(app).get('/test')
