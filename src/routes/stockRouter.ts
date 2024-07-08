@@ -1,4 +1,4 @@
-import stockController from '@/controller/stockController'
+import stockController from '../controller/stockController'
 import express from 'express'
 import { param } from 'express-validator'
 
