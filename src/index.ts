@@ -38,13 +38,14 @@ mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string).then(() => {
 app.get('/test', (req: Request, res: Response) => res.send('Hello World!'))
 app.get(
   '/test1',
-  ClerkExpressWithAuth({
-    // Add options here
-    // See the Middleware options section for more details
-  }),
+  ClerkExpressWithAuth(),
   (req: WithAuthProp<Request>, res: Response) => {
     res.json(req.auth)
   }
 )
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+const server = app.listen(port, () =>
+  console.log(`Example app listening on port ${port}!`)
+)
+
+export { app, server }
