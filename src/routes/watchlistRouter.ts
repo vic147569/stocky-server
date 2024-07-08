@@ -1,4 +1,4 @@
-import watchlistController from '@/controller/watchlistController'
+import watchlistController from '../controller/watchlistController'
 import {
   ClerkExpressRequireAuth,
   ClerkExpressWithAuth

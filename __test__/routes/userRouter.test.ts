@@ -1,10 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import request from 'supertest'
 import express, { NextFunction, Request, Response } from 'express'
 import userRouter from '../../src/routes/userRouter'
 import userController from '../../src/controller/userController'
-import { ClerkExpressRequireAuth } from '@clerk/clerk-sdk-node'
-import { JWTParse } from '../../src/middleware/auth'
 
 // Mock the Clerk middleware and JWTParse middleware
 jest.mock('@clerk/clerk-sdk-node', () => ({
