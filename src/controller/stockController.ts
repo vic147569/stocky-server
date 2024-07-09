@@ -1,6 +1,6 @@
-import analyzer, { StockType } from '@/data/analyzer'
-import History from '@/models/history'
-import Stock from '@/models/stock'
+import analyzer, { StockType } from '../../src/data/analyzer'
+import History from '../../src/models/history'
+import Stock from '../../src/models/stock'
 import { Request, Response } from 'express'
 
 class StockController {
