@@ -31,11 +31,11 @@ const analyzer = (stock: StockType) => {
 
   let res = ''
 
-  if (score === 3) res = 'Strong Buy'
+  if (score >= 3) res = 'Strong Buy'
   if (score > 0 && score < 3) res = 'Buy'
   if (score === 0) res = 'Hold'
   if (score > -3 && score < 0) res = 'Sell'
-  if (score === -3) res = 'Strong Sell'
+  if (score <= -3) res = 'Strong Sell'
 
   return res
 }
