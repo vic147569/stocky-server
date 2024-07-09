@@ -2,9 +2,9 @@ import { CronJob } from 'cron'
 import yahooFinance from 'yahoo-finance2'
 import { stockList } from './stock'
 import Stock from '../models/stock'
-import History from '@/models/history'
+import History from '../models/history'
 
-const collector = async () => {
+export const collector = async () => {
   console.log('start')
   for (const item of stockList) {
     const query = item.symbol
