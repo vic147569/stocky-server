@@ -1,4 +1,4 @@
-import Watchlist from '@/models/watchlist'
+import Watchlist from '../../src/models/watchlist'
 import { RequireAuthProp, WithAuthProp } from '@clerk/clerk-sdk-node'
 import { Request, Response } from 'express'
 
