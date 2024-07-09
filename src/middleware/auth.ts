@@ -8,12 +8,12 @@ export const JWTParse = async (
 ) => {
   try {
     const userId = req.auth.userId
-    const user = await User.findOne({ userId }).orFail()
+    const user = await User.findOne({ userId })
     if (!user) {
-      res.sendStatus(401)
+      res.status(401)
     }
     next()
   } catch (error) {
-    res.sendStatus(401)
+    res.status(401)
   }
 }
