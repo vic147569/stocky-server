@@ -6,47 +6,24 @@ on:
       - main
 
 jobs:
-  deploy:
+  Deploy:
+    name: Deploy to EC2
     runs-on: ubuntu-latest
-    # environment:
-    #   name: Dev
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18'
-
-      - name: Install dependencies
-        run: npm install
-
-      # - name: Run tests
-      #   run: npm test
-      #   env:
-      #     MONGODB_CONNECTION_STRING: ${{secrets.MONGODB_CONNECTION_STRING}}
-      #     CLERK_PUBLISHABLE_KEY: ${{secrets.CLERK_PUBLISHABLE_KEY}}
-      #     CLERK_SECRET_KEY: ${{secrets.CLERK_SECRET_KEY}}
-      #     CLERK_FRONTEND_API_URL: ${{secrets.CLERK_FRONTEND_API_URL}}
-      #     CLERK_BACKEND_API_URL: ${{secrets.CLERK_BACKEND_API_URL}}
-      #     CLERK_PEM_PUBLIC_KEY: ${{secrets.CLERK_PEM_PUBLIC_KEY}}
-
-      - name: Deploy to EC2
+      - uses: actions/checkout@v2
+      - name: Build & Deploy
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          EC2_HOST: ${{ secrets.EC2_HOST }}
-          EC2_USER: ${{ secrets.EC2_USER }}
-          EC2_KEY: ${{ secrets.EC2_KEY }}
-        run: |
-          echo "${{ secrets.EC2_KEY }}" > ec2-key.pem
-          chmod 400 ec2-key.pem
+          PRIVATE_KEY: ${{ secrets.EC2_KEY }}
+          HOSTNAME: ${{secrets.EC2_HOST}}
+          USER_NAME: ${{secrets.EC2_USER}}
 
-          scp -i ec2-key.pem -o StrictHostKeyChecking=no -r * ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/stocky-server
-          ssh -i ec2-key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-            cd ~/stocky-server
-            npm install
-            pm2 restart all || pm2 start index.ts --name stocky-server
-          EOF
+        run: |
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+
+              # Now we have got the access of EC2 and we will start the deploy .
+              cd /home/ubuntu/stocky-server &&
+              npm i &&
+              pm2 restart all || pm2 start index.ts --name stocky-server
+              '
