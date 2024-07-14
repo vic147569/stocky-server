@@ -28,6 +28,5 @@ jobs:
           ssh -i ec2-key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
             cd /home/${{ secrets.EC2_USER }}/stocky-server
             npm install
-            # pm2 restart all || pm2 start src/index.ts --name stocky-server --interpreter node
-            pm2 restart all || pm2 start ecosystem.config.cjs --only stocky-server
+            pm2 restart all || pm2 start src/index.ts --name stocky-server --interpreter tsx
           EOF
