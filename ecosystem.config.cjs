@@ -2,7 +2,8 @@ module.exports = {
   apps: [
     {
       name: 'stocky-server',
-      script: 'npx tsx ./src/index.ts',
+      script: './src/index.ts',
+      args: 'run start',
       instances: 1,
       autorestart: true,
       watch: false,

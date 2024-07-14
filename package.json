@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon",
+    "start": "npx tsx",
     "build": "tsc",
     "test": "jest --coverage --detectOpenHandles",
     "clean": "rimraf coverage build tmp",
