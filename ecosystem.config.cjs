@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'NodeServer',
+      name: 'stocky-server',
       script: 'npm',
       automation: false,
       args: 'run start',
