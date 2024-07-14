@@ -26,10 +26,6 @@ jobs:
           echo "Trying to connect to ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} with key ec2-key.pem"
 
           ssh -i ec2-key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-            sudo apt-get update
-            sudo apt-get install -y nodejs npm
-            sudo npm install -g pm2
-          EOF
 
           scp -i ec2-key.pem -o StrictHostKeyChecking=no -r * ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/stocky-server
           ssh -i ec2-key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
