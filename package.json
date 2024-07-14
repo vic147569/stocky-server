@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon",
-    "start": "npx tsx ./src/index.ts",
+    "start": "ts-node -T -P ./tsconfig.json ./index.ts",
     "build": "tsc",
     "test": "jest --coverage --detectOpenHandles",
     "clean": "rimraf coverage build tmp",
