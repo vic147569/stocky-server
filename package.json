@@ -4,7 +4,8 @@
   "main": "index.ts",
   "type": "module",
   "scripts": {
-    "dev": "nodemon ./src/index.ts",
+    "dev": "nodemon",
+    "build": "tsc",
     "test": "jest --coverage --detectOpenHandles",
     "clean": "rimraf coverage build tmp",
     "prettier": "prettier --write .",
