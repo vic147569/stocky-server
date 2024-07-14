@@ -8,7 +8,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: Dev
 
     steps:
       - name: Checkout code
@@ -21,12 +20,12 @@ jobs:
           EC2_HOST: ${{ secrets.EC2_HOST }}
           EC2_USER: ${{ secrets.EC2_USER }}
           EC2_KEY: ${{ secrets.EC2_KEY }}
-          MONGODB_CONNECTION_STRING: ${{ env.MONGODB_CONNECTION_STRING }}
-          CLERK_PUBLISHABLE_KEY: ${{ env.CLERK_PUBLISHABLE_KEY }}
-          CLERK_SECRET_KEY: ${{ env.CLERK_SECRET_KEY }}
-          CLERK_FRONTEND_API_URL: ${{ env.CLERK_FRONTEND_API_URL }}
-          CLERK_BACKEND_API_URL: ${{ env.CLERK_BACKEND_API_URL }}
-          CLERK_PEM_PUBLIC_KEY: ${{ env.CLERK_PEM_PUBLIC_KEY }}
+          MONGODB_CONNECTION_STRING: ${{ secrets.MONGODB_CONNECTION_STRING }}
+          CLERK_PUBLISHABLE_KEY: ${{ secrets.CLERK_PUBLISHABLE_KEY }}
+          CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
+          CLERK_FRONTEND_API_URL: ${{ secrets.CLERK_FRONTEND_API_URL }}
+          CLERK_BACKEND_API_URL: ${{ secrets.CLERK_BACKEND_API_URL }}
+          CLERK_PEM_PUBLIC_KEY: ${{ secrets.CLERK_PEM_PUBLIC_KEY }}
         run: |
           echo "${{ secrets.EC2_KEY }}" | base64 --decode > ec2-key.pem
           chmod 400 ec2-key.pem
@@ -34,12 +33,12 @@ jobs:
 
           ssh -i ec2-key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
             cd /home/${{ secrets.EC2_USER }}/stocky-server
-            echo "MONGODB_CONNECTION_STRING=${{ vars.MONGODB_CONNECTION_STRING }}" > .env
-            echo "CLERK_PUBLISHABLE_KEY=${{ vars.CLERK_PUBLISHABLE_KEY }}" >> .env
-            echo "CLERK_SECRET_KEY=${{ vars.CLERK_SECRET_KEY }}" >> .env
-            echo "CLERK_FRONTEND_API_URL=${{ vars.CLERK_FRONTEND_API_URL }}" >> .env
-            echo "CLERK_BACKEND_API_URL=${{ vars.CLERK_BACKEND_API_URL }}" >> .env
-            echo "CLERK_PEM_PUBLIC_KEY=${{ vars.CLERK_PEM_PUBLIC_KEY }}" >> .env
+            echo "MONGODB_CONNECTION_STRING=${{ secrets.MONGODB_CONNECTION_STRING }}" > .env
+            echo "CLERK_PUBLISHABLE_KEY=${{ secrets.CLERK_PUBLISHABLE_KEY }}" >> .env
+            echo "CLERK_SECRET_KEY=${{ secrets.CLERK_SECRET_KEY }}" >> .env
+            echo "CLERK_FRONTEND_API_URL=${{ secrets.CLERK_FRONTEND_API_URL }}" >> .env
+            echo "CLERK_BACKEND_API_URL=${{ secrets.CLERK_BACKEND_API_URL }}" >> .env
+            echo "CLERK_PEM_PUBLIC_KEY=${{ secrets.CLERK_PEM_PUBLIC_KEY }}" >> .env
             npm install
             pm2 restart all || pm2 start ecosystem.config.cjs
           EOF
