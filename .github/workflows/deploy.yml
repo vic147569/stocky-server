@@ -25,9 +25,9 @@ jobs:
           chmod 400 ec2-key.pem
           echo "Trying to connect to ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} with key ec2-key.pem"
 
-          scp -i ec2-key.pem -o StrictHostKeyChecking=no -r * ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/stocky-server
+          # scp -i ec2-key.pem -o StrictHostKeyChecking=no -r * ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/stocky-server
           ssh -i ec2-key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-            sudo mv ~/stocky-server/home/${{ secrets.EC2_USER }}/stocky-server
+            # sudo mv ~/stocky-server/home/${{ secrets.EC2_USER }}/stocky-server
             cd /home/${{ secrets.EC2_USER }}/stocky-server
             npm install
             pm2 restart all || pm2 start app.js --name stocky-server
