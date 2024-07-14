@@ -5,7 +5,6 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon",
-    "build": "tsc",
     "test": "jest --coverage --detectOpenHandles",
     "clean": "rimraf coverage build tmp",
     "prettier": "prettier --write .",
@@ -65,6 +64,7 @@
     "mongodb": "^6.7.0",
     "mongoose": "^8.4.3",
     "supertest": "^7.0.0",
+    "tsx": "^4.16.2",
     "yahoo-finance2": "^2.11.3"
   },
   "nodemonConfig": {

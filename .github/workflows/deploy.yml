@@ -29,5 +29,5 @@ jobs:
             cd /home/${{ secrets.EC2_USER }}/stocky-server
             npm install
             # pm2 restart all || pm2 start src/index.ts --name stocky-server
-            pm2 restart all || pm2 start ecosystem.config.cjs --only stocky-server
+            pm2 restart all || pm2 start ecosystem.config.cjs
           EOF
