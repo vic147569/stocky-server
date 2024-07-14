@@ -41,7 +41,7 @@ jobs:
           EC2_USER: ${{ secrets.EC2_USER }}
           EC2_KEY: ${{ secrets.EC2_KEY }}
         run: |
-          echo "${{ secrets.EC2_KEY }}" | base64 --decode > ec2-key.pem
+          echo "${{ secrets.EC2_KEY }}" > ec2-key.pem
           chmod 400 ec2-key.pem
 
           scp -i ec2-key.pem -o StrictHostKeyChecking=no -r * ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/stocky-server
