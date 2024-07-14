@@ -2,9 +2,10 @@ module.exports = {
   apps: [
     {
       name: 'stocky-server',
-      script: 'npm',
+      script: './src/index.ts',
       automation: false,
-      args: 'run start',
+      interpreter: 'node',
+      interpreterArgs: '--import tsx',
       env: {
         NODE_ENV: 'development'
       },
