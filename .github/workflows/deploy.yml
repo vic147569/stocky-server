@@ -35,7 +35,7 @@ jobs:
 
           ssh -i ec2-key.pem -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
             rm -rf stocky-server
-            gti clone https://github.com/vic147569/stocky-server.git
+            git clone https://github.com/vic147569/stocky-server.git
             cd /home/${{ secrets.EC2_USER }}/stocky-server
             echo "MONGODB_CONNECTION_STRING=${{ secrets.MONGODB_CONNECTION_STRING }}" > .env
             echo "CLERK_PUBLISHABLE_KEY=${{ secrets.CLERK_PUBLISHABLE_KEY }}" >> .env
