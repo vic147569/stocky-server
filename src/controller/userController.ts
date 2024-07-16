@@ -4,6 +4,7 @@ import { RequireAuthProp } from '@clerk/clerk-sdk-node'
 
 class UserController {
   async create(req: RequireAuthProp<Request>, res: Response) {
+    console.log('controller create user start')
     try {
       const { userId } = req.body
       const existingUser = await User.findOne({ userId })
@@ -11,12 +12,13 @@ class UserController {
         return res.status(200).send('user existed')
       }
       const newUser = new User(req.body)
-      newUser.save()
+      await newUser.save()
+      console.log('controller create user finish')
 
-      res.status(201).json(newUser.toObject())
+      return res.status(201).json(newUser.toObject())
     } catch (error) {
       console.log(error)
-      res.status(500).json({ message: 'Create user fail' })
+      return res.status(500).json({ message: 'Create user fail' })
     }
   }
 
@@ -24,12 +26,12 @@ class UserController {
     try {
       const currentUser = await User.findOne({ userId: req.auth.userId })
       if (!currentUser) {
-        res.status(404).json({ message: 'User not found' })
+        return res.status(404).json({ message: 'User not found' })
       }
-      res.json(currentUser)
+      return res.json(currentUser)
     } catch (error) {
       console.log(error)
-      res.status(500).json({ message: 'Something went wrong' })
+      return res.status(500).json({ message: 'Something went wrong' })
     }
   }
 
